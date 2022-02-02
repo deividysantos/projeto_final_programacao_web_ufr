@@ -31,8 +31,7 @@
         <input type="text" name="releaseYear" id="releaseYear" value="{{isset($book) ? $book->releaseYear : ''}}">
 
         <input type="submit" value="{{isset($book) ? 'Update' : 'Create'}}">
-        <a href="{{route('view.index')}}"> < Back</a>
+        <a class="back" href="{{route('view.index')}}"> < Back</a>
     </form>
-
 
 @endsection

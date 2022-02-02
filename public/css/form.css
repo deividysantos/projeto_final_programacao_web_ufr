@@ -1,11 +1,11 @@
 form{
     display: flex;
     flex-direction: column;
-    margin: 50px auto 0 auto;
+    margin: 30px auto 0 auto;
     width: 400px;
     color: #fff;
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
-    padding: 50px;
+    padding: 30px;
     border-radius: 10px;
 }
 
@@ -23,7 +23,7 @@ form label{
 }
 
 form input[type='submit'] {
-    height: 30px;
+    height: 35px;
     background-color: #1166C3;
 
     cursor: pointer;
@@ -46,6 +46,10 @@ a{
 
 a:hover{
     text-decoration: underline;
+}
+
+.back{
+    margin-top: 15px;
 }
 
 @media (max-width: 900px) {

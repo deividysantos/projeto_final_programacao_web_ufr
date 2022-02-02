@@ -19,6 +19,8 @@
         }
 
         .content{
+            display: flex;
+            flex-direction: column;
             padding: 15px;
             width: 800px;
             margin: auto;

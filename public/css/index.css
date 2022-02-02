@@ -2,10 +2,25 @@ form{
     width: 80px;
 }
 
+.btn{
+    cursor: pointer;
+    color: #fff;
+    background-color: #1166C3;
+    padding: 5px 15px;
+    border-radius: 3px;
+    text-decoration: none;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.btn:hover{
+    background-color: #0554A8;
+}
+
 .book{
     display: flex;
     flex-direction: column;
-    margin: 15px 0 50px 0;
+    margin: 0 0 50px 0;
     border-radius: 10px;
     padding: 10px;
     color: white;
@@ -30,24 +45,20 @@ span{
     justify-content: space-around;
 }
 
-.btn{
-    cursor: pointer;
-    color: #fff;
-    background-color: #1166C3;
-    padding: 5px 15px;
-    border-radius: 3px;
-}
-
-.btn:hover{
-    background-color: #0554A8;
-}
-
 .edit{
     color: #fecf6a;
 }
 
+.edit:hover{
+    color: #f0a911;
+}
+
 .delete{
     color: #DD4848;
+}
+
+.delete:hover{
+    color: #c42828;
 }
 
 .svg{

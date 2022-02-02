@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateNewBookRequest;
+use App\Http\Requests\EditBookRequest;
 use App\Models\Book;
+use App\Repositories\BookRepository;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+    private BookRepository $bookRepository;
+
+    public function __construct(BookRepository $bookRepository)
+    {
+        $this->bookRepository = $bookRepository;
+    }
+
     public function getListAllBooks()
     {
-        $books = Book::all();
+        $books = $this->bookRepository->getAll();
         return view('index', compact(['books']));
     }
 
@@ -20,78 +30,32 @@ class BookController extends Controller
 
     public function getFormEditBook(string $bookId)
     {
-        if(!$this->bookExistById($bookId))
+        if(!$this->bookRepository->bookExistById($bookId))
             return redirect()->route('view.index');
 
-        $book = Book::find($bookId);
+        $book = $this->bookRepository->getById($bookId);
 
         return view('form', compact('book'));
     }
 
-    public function postCreateNewBook(Request $request)
+    public function postCreateNewBook(CreateNewBookRequest $request)
     {
-        $request->validate([
-            'title' => 'required | max:255',
-            'author' => 'required | max: 255',
-            'ISBN' => 'required',
-            'price' => 'required | numeric',
-            'publishingCompany' => 'required | string | max: 255',
-            'releaseYear' => 'required | string'
-        ]);
-
-        $payload = $this->makePayload($request);
-
-        Book::create($payload);
+        $this->bookRepository->create($request);
 
         return redirect()->route('view.index');
     }
 
-    public function postEditBook(Request $request)
+    public function postEditBook(EditBookRequest $request)
     {
-        $request->validate([
-            'id' => 'required',
-            'title' => 'required | max:255',
-            'author' => 'required | max: 255',
-            'ISBN' => 'required',
-            'price' => 'required | numeric',
-            'publishingCompany' => 'required | string | max: 255',
-            'releaseYear' => 'required | string'
-        ]);
-
-        if($this->bookExistById($request['id']))
-            Book::where('id', $request['id'])
-                ->update($this->makePayload($request));
+        $this->bookRepository->edit($request);
 
         return redirect()->route('view.index');
     }
 
     public function postDelete($id)
     {
-        if($this->bookExistById($id))
-            Book::destroy($id);
+        $this->bookRepository->delete($id);
 
         return redirect()->route('view.index');
-    }
-
-    protected function bookExistById($id)
-    {
-        $book = Book::find($id);
-
-        if ($book) return true;
-
-        return false;
-    }
-
-    protected function makePayload(Request $request)
-    {
-        return
-            [
-                'title' => $request['title'],
-                'author' => $request['author'],
-                'ISBN' => $request['ISBN'],
-                'price' => $request['price'],
-                'publishingCompany' => $request['publishingCompany'],
-                'releaseYear' => $request['releaseYear']
-            ];
     }
 }
